@@ -1,11 +1,28 @@
-import pandas as pd
-from datetime import datetime
-from itertools import combinations
+import os
+import glob
 
-# Sample interview data in a pandas DataFrame
-data = {
-    "id": [1, 2, 3, 4],
-    "date": ["2023-10-01", "2023-10-01", "2023-10-02", "2023-10-02"],
+folder_path = "/path/to/your/folder"  # Replace with the actual folder path
+
+# List all files in the folder
+files = glob.glob(os.path.join(folder_path, 'HH_Status_*'))
+
+# Extract file names without the date
+file_names = [os.path.splitext(os.path.basename(file))[0] for file in files]
+
+# Find the latest dated file
+latest_file = max(files, key=os.path.getctime)
+
+print("Extracted file names without date:", file_names)
+print("Latest dated file:", latest_file)
+
+
+
+
+
+
+
+
+, "2023-10-01", "2023-10-02", "2023-10-02"],
     "time": ["08:00:00", "08:02:00", "10:00:00", "10:03:00"],
 }
 
