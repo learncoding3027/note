@@ -33,6 +33,11 @@ for index1, index2 in combinations(range(len(interview_df)), 2):
     row1 = interview_df.iloc[index1]
     row2 = interview_df.iloc[index2]
 
+
+
+
+
+
     if row1["date"] == row2["date"] and row1["time"] == row2["time"]:
         time_difference = calculate_time_difference_in_minutes(row1["time"], row2["time"])
         if time_difference < threshold_minutes:
@@ -43,3 +48,53 @@ interview_ids_with_threshold = list(set(interview_ids_with_threshold))
 
 # Print the IDs of interviews with time differences less than 5 minutes
 print("Interview IDs with time differences less than 5 minutes:", interview_ids_with_threshold)
+
+
+
+
+
+
+
+import pandas as pd
+
+# Sample data in "design" and "rec" DataFrames
+design_data = pd.DataFrame({
+    'Town code': [101, 102, 103],
+    'Parent code': [201, 202, 203]
+})
+
+rec_data = pd.DataFrame({
+    'Town code': [101, 103, 102, 104, 105]
+})
+
+# Create a dictionary from the "design" DataFrame
+town_to_parent_dict = design_data.set_index('Town code')['Parent code'].to_dict()
+
+# Map the values to the "rec" DataFrame based on the "Town code" column
+rec_data['Parent code'] = rec_data['Town code'].map(town_to_parent_dict)
+
+# Print the "rec" DataFrame with the "Parent code" column added
+print(rec_data)
+
+
+
+
+
+
+import pandas as pd
+
+# Sample data in "design" and "rec" DataFrames
+design_data = pd.DataFrame({
+    'Town code': [101, 102, 103],
+    'Parent code': [201, 202, 203]
+})
+
+rec_data = pd.DataFrame({
+    'Town code': [101, 103, 102, 104, 105]
+})
+
+# Merge the "rec" DataFrame with the "design" DataFrame based on the "Town code" column
+merged_data = rec_data.merge(design_data, left_on='Town code', right_on='Town code', how='left')
+
+# The "Parent code" column from the "design" DataFrame is now added to the "rec" DataFrame
+print(merged_data)
