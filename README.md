@@ -1,3 +1,34 @@
+
+import os
+import glob
+
+folder_path = "/path/to/your/folder"  # Replace with the actual folder path
+
+# List all files in the folder
+files = glob.glob(os.path.join(folder_path, 'HH_Status_*'))
+
+# Extract file names without the date and find the latest dated file
+file_names = [os.path.splitext(os.path.basename(file))[0] for file in files]
+latest_file = max(files, key=os.path.getctime)
+
+# Extract the date from the latest file name
+date_from_latest_file = os.path.splitext(os.path.basename(latest_file))[0].split('_')[2]
+
+# Construct the output file name with the date
+output_file_name = f"file_{date_from_latest_file}.csv"
+
+print("Extracted file names without date:", file_names)
+print("Latest dated file:", latest_file)
+print("Output file name with date:", output_file_name)
+
+
+
+
+
+
+
+
+
 import os
 import glob
 
