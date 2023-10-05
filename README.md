@@ -1,4 +1,29 @@
-i1.write me python code to check interview timing is only between 7:00:00 to 20:00:00 and if any ids in present out of this time  provide me list of ids which are doing interview in odd timing.
+import pandas as pd
+
+# Sample DataFrame with ID and Time columns in time format
+data = {'ID': [1, 2, 3, 4, 5],
+        'Time': ['08:30:00', '19:45:00', '21:15:00', '11:30:00', '14:00:00']}
+
+df = pd.DataFrame(data)
+
+# Define the time range (from 7:00:00 to 20:00:00)
+start_time = pd.Timestamp('07:00:00').time()
+end_time = pd.Timestamp('20:00:00').time()
+
+# Function to check if a time falls outside the specified time range
+def is_outside_time_range(time_str):
+    time_val = pd.Timestamp(time_str).time()
+    return not (start_time <= time_val <= end_time)
+
+# Filter the DataFrame to get IDs with interview timings outside the range
+outside_range_ids = df[df['Time'].apply(is_outside_time_range)]['ID'].tolist()
+
+print("IDs with interview timings outside the specified range:", outside_range_ids)
+
+
+
+
+1.write me python code to check interview timing is only between 7:00:00 to 20:00:00 and if any ids in present out of this time  provide me list of ids which are doing interview in odd timing.
 
 import pandas as pd
 
