@@ -1,3 +1,45 @@
+
+Here is the agenda for today's meeting:
+
+Cluster cycle reduced to 1 due to IPMS:
+
+Nitish has provided a date until October 10th. We will continue on a weekly basis until further notice. In case of any gaps or emergencies, we will adapt accordingly.
+Resumption of QC calling:
+
+Tarkeshwar Mishra will initiate discussions with Arup to resume QC calling this week. Although the procedure remains unclear, the entire cycle takes approximately 10 hours and was previously completed over a span of 4-5 days.
+New OOH design execution:
+
+Prakash will share the new design and provide a plan for installations and deinstallations over the next 10 months. There has been an unusual drop in OOH data over the past 15 to 20 days due to a lack of meter maintenance.
+Churn release after 4 weeks:
+
+We will start releasing churn data going forward. Prakash will commence this process from this month onwards, gradually increasing churn numbers, and aiming to clear the pending churn backlog within the next 3 months.
+Sample plan for replacement of BMs by Android meters:
+
+Bhushan will share a plan for the replacement of 1300 BMs with Android meters.
+In addition to the shared agenda:
+
+Aligning the Listing Questionnaire with the CP Questionnaire on similar information areas:
+
+About 65 questions will be sourced from the listing questionnaire. These questions require approval and are expected to be finalized by next week (Wednesday).
+Blacklisting Pin code/Town code causing infiltration and addressing it based on MSCI guidelines:
+
+Tarkeshwar will discuss the volume of pin codes and the potential impact.
+Dynamic Conversion Ratio:
+
+Prakash has conducted a detailed analysis based on three recruitments and provided data. We plan to present this information to Derrick tomorrow, and once approval is obtained, I will share it.
+Issues in Town code parameters:
+
+These issues are pending from the tech team's end. We will closely monitor progress in this area.
+MOSR-Others calling:
+
+This activity is currently on hold. We will resume work on it once the system stabilizes.
+
+
+
+
+
+
+
 below are the points which i where submited so below that are not perfect so make it perfect 
 
 
