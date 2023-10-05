@@ -1,3 +1,37 @@
+import pandas as pd
+
+# Sample DataFrame with ID, name, date, and time columns
+data = {'ID': [1, 2, 3, 4, 5],
+        'Name': ['Alice', 'Bob', 'Alice', 'Alice', 'Bob'],
+        'Date': ['2023-10-03', '2023-10-03', '2023-10-03', '2023-10-03', '2023-10-03'],
+        'Time': ['10:00:00', '10:15:00', '10:30:00', '10:45:00', '11:00:00']}
+
+df = pd.DataFrame(data)
+
+# Convert 'Date' and 'Time' columns to datetime format
+df['DateTime'] = pd.to_datetime(df['Date'] + ' ' + df['Time'])
+
+# Sort the DataFrame by name, date, and time
+df.sort_values(by=['Name', 'Date', 'Time'], inplace=True)
+
+# Create a new DataFrame to store time differences
+time_diff_df = df.groupby(['Name', 'Date'])['DateTime'].diff().fillna(pd.Timedelta(seconds=0))
+
+# Filter the DataFrame to get IDs with time differences less than 5 minutes
+result_ids = df[(time_diff_df < pd.Timedelta(minutes=5)) & (time_diff_df >= pd.Timedelta(seconds=0))]['ID'].tolist()
+
+print("IDs with interview time differences less than 5 minutes:", result_ids)
+
+
+
+
+
+
+
+
+
+
+
 from datetime import datetime
 from collections import defaultdict
 
