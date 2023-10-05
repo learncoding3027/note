@@ -24,6 +24,12 @@ result_ids = df[(time_diff_df < pd.Timedelta(minutes=5)) & (time_diff_df >= pd.T
 print("IDs with interview time differences less than 5 minutes:", result_ids)
 
 
+        ID	Name	Date	                Time	             diff
+	1	Alice	2023-10-03	2023-10-05 10:00:00	0 days 00:00:00
+	3	Alice	2023-10-03	2023-10-05 10:03:00	0 days 00:03:00
+	4	Alice	2023-10-03	2023-10-05 10:45:00	0 days 00:42:00
+	2	Bob	2023-10-03	2023-10-05 10:15:00	0 days 00:00:00
+	5	Bob	2023-10-03	2023-10-05 11:00:00	0 days 00:45:00
 
 
 
