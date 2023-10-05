@@ -1,3 +1,52 @@
+from datetime import datetime
+from collections import defaultdict
+
+# Sample interview data with ID, name, date, and time
+interview_data = [
+    {"ID": 1, "Name": "Alice", "Date": "2023-10-03", "Time": "10:00:00"},
+    {"ID": 2, "Name": "Bob", "Date": "2023-10-03", "Time": "10:15:00"},
+    {"ID": 3, "Name": "Alice", "Date": "2023-10-03", "Time": "10:30:00"},
+    {"ID": 4, "Name": "Alice", "Date": "2023-10-03", "Time": "10:45:00"},
+    {"ID": 5, "Name": "Bob", "Date": "2023-10-03", "Time": "11:00:00"},
+    {"ID": 6, "Name": "Alice", "Date": "2023-10-04", "Time": "09:00:00"},
+    {"ID": 7, "Name": "Alice", "Date": "2023-10-04", "Time": "09:15:00"},
+]
+
+# Sort the interview data by name, date, and time
+sorted_data = sorted(interview_data, key=lambda x: (x["Name"], x["Date"], x["Time"]))
+
+# Create a dictionary to store interview times by person and date
+interview_times = defaultdict(list)
+
+for entry in sorted_data:
+    key = (entry["Name"], entry["Date"])
+    interview_times[key].append(datetime.strptime(entry["Time"], "%H:%M:%S"))
+
+# Find time differences and IDs with differences less than 5 minutes
+result_ids = []
+
+for key, times in interview_times.items():
+    times.sort()  # Sort interview times for each person and date
+    for i in range(1, len(times)):
+        time_diff = (times[i] - times[i - 1]).total_seconds() / 60  # Calculate time difference in minutes
+        if time_diff < 5:
+            result_ids.append(key[0])  # Add the person's name to the result
+
+# Remove duplicates and sort the result
+result_ids = sorted(set(result_ids))
+
+print("IDs with interview time differences less than 5 minutes:", result_ids)
+
+
+
+
+
+
+
+
+
+
+
 import pandas as pd
 
 # Sample DataFrame with ID and Time columns in time format
