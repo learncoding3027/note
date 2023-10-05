@@ -15,6 +15,35 @@ df['Time'] = pd.to_datetime(df['Time'])
 df.sort_values(by=['Name', 'Date', 'Time'], inplace=True)
 
 # Create a new DataFrame to store time differences
+df['Time_diff'] = df.groupby('Name')['Time'].diff()
+
+# Filter the DataFrame to get IDs with time differences less than 5 minutes
+# Ignore the first entry for each person (where Time_diff is NaN)
+result_ids = df[(df['Time_diff'] < pd.Timedelta(minutes=5)) & ~df['Time_diff'].isna()]['ID'].tolist()
+
+print("IDs with interview time differences less than 5 minutes (ignoring the first entry for each person):", result_ids)
+
+
+
+
+
+import pandas as pd
+
+# Sample DataFrame with ID, name, date, and time columns
+data = {'ID': [1, 2, 3, 4, 5],
+        'Name': ['Alice', 'Bob', 'Alice', 'Alice', 'Bob'],
+        'Date': ['2023-10-03', '2023-10-03', '2023-10-03', '2023-10-03', '2023-10-03'],
+        'Time': ['10:00:00', '10:15:00', '10:03:00', '10:45:00', '11:00:00']}
+
+df = pd.DataFrame(data)
+
+# Convert 'Date' and 'Time' columns to datetime format
+df['Time'] = pd.to_datetime(df['Time'])
+
+# Sort the DataFrame by name, date, and time
+df.sort_values(by=['Name', 'Date', 'Time'], inplace=True)
+
+# Create a new DataFrame to store time differences
 time_diff_df = df.groupby('Name')['Time'].diff().fillna(pd.Timedelta(seconds=0))
 
 # Filter the DataFrame to get IDs with time differences less than 5 minutes
