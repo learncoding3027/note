@@ -1,6 +1,88 @@
 
 import pandas as pd
 
+# Sample DataFrame with ID, interviewer ID, name, latitude, longitude, and date columns
+data = {'ID': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        'InterviewerID': [101, 102, 101, 103, 102, 101, 103, 104, 105, 101],
+        'Name': ['Alice', 'Bob', 'Alice', 'Alice', 'Bob', 'Alice', 'Alice', 'Bob', 'Alice', 'Bob'],
+        'Latitude': [40.7128, 40.7128, 34.0522, 34.0522, 34.0522, 40.7128, 34.0522, 34.0522, 40.7128, 34.0522],
+        'Longitude': [-74.0060, -74.0060, -118.2437, -118.2437, -118.2437, -74.0060, -118.2437, -118.2437, -74.0060, -118.2437],
+        'Date': ['2023-10-03', '2023-10-03', '2023-10-03', '2023-10-04', '2023-10-04', '2023-10-05', '2023-10-05', '2023-10-06', '2023-10-06', '2023-10-07']}
+
+df = pd.DataFrame(data)
+
+# Convert 'Date' column to datetime format
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Create a pivot table to count interviews based on GPS latitude and longitude
+pivot_table = df.pivot_table(index=['Latitude', 'Longitude'], columns='Date', values='ID', aggfunc='count', fill_value=0)
+
+# Filter the pivot table to get counts more than 20
+filtered_pivot = pivot_table[pivot_table > 20].dropna()
+
+# Display the filtered pivot table
+print("Pivot table with counts more than 20:")
+print(filtered_pivot)
+
+# Extract the latitude and longitude indices from the filtered pivot table
+filtered_indices = filtered_pivot.index.tolist()
+
+# Filter the original DataFrame based on the filtered indices
+filtered_data = df[df.apply(lambda x: (x['Latitude'], x['Longitude']) in filtered_indices, axis=1)]
+
+# Display the filtered data with ID, interviewer ID, name, and count of interviews on a single date
+print("\nFiltered Data:")
+print(filtered_data[['ID', 'InterviewerID', 'Name', 'Date']])
+
+
+
+
+
+
+
+
+
+
+import pandas as pd
+
+# Sample DataFrame with ID, interviewer ID, name, and date columns
+data = {'ID': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        'InterviewerID': [101, 102, 101, 103, 102, 101, 103, 104, 105, 101],
+        'Name': ['Alice', 'Bob', 'Alice', 'Alice', 'Bob', 'Alice', 'Alice', 'Bob', 'Alice', 'Bob'],
+        'Date': ['2023-10-03', '2023-10-03', '2023-10-03', '2023-10-04', '2023-10-04', '2023-10-05', '2023-10-05', '2023-10-06', '2023-10-06', '2023-10-07']}
+
+df = pd.DataFrame(data)
+
+# Convert 'Date' column to datetime format
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Group by 'Name' and 'Date' and count the number of interviews
+interview_counts = df.groupby(['Name', 'Date']).size().reset_index(name='InterviewCount')
+
+# Filter the data where interview count is more than 20
+filtered_data = interview_counts[interview_counts['InterviewCount'] > 20]
+
+# Display the result
+print("Interviews with more than 20 counts:")
+print(filtered_data)
+
+# If you want to get the list of IDs for those interviews
+filtered_ids = df[df['Name'].isin(filtered_data['Name']) & df['Date'].isin(filtered_data['Date'])]['ID'].tolist()
+print("\nList of IDs for interviews with more than 20 counts:")
+print(filtered_ids)
+
+
+
+
+
+
+
+
+
+
+
+import pandas as pd
+
 # Sample DataFrame with ID, name, and time columns
 data = {'ID': [1, 2, 3, 4, 5],
         'Name': ['Alice', 'Bob', 'Alice', 'Alice', 'Bob'],
