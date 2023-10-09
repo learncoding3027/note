@@ -1,79 +1,37 @@
+df_time=df2.copy()
+# Sort the DataFrame by name, date, and time
+df_time.sort_values(by=['Interviewer Name', 'Survey Date', 'Survey Start time'], inplace=True)
 
-import pandas as pd
+df_time['Survey Start time']=df_time['Survey Start time'].astype(str)
+# Convert the Survey Date column to datetime objects
+df_time['Survey Start time'] = pd.to_datetime(df_time['Survey Start time'])
 
-# Sample DataFrame with ID, interviewer ID, name, latitude, longitude, and date columns
-data = {'ID': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        'InterviewerID': [101, 102, 101, 103, 102, 101, 103, 104, 105, 101],
-        'Name': ['Alice', 'Bob', 'Alice', 'Alice', 'Bob', 'Alice', 'Alice', 'Bob', 'Alice', 'Bob'],
-        'Latitude': [40.7128, 40.7128, 34.0522, 34.0522, 34.0522, 40.7128, 34.0522, 34.0522, 40.7128, 34.0522],
-        'Longitude': [-74.0060, -74.0060, -118.2437, -118.2437, -118.2437, -74.0060, -118.2437, -118.2437, -74.0060, -118.2437],
-        'Date': ['2023-10-03', '2023-10-03', '2023-10-03', '2023-10-04', '2023-10-04', '2023-10-05', '2023-10-05', '2023-10-06', '2023-10-06', '2023-10-07']}
-
-df = pd.DataFrame(data)
-
-# Convert 'Date' column to datetime format
-df['Date'] = pd.to_datetime(df['Date'])
-
-# Create a pivot table to count interviews based on GPS latitude and longitude
-pivot_table = df.pivot_table(index=['Latitude', 'Longitude'], columns='Date', values='ID', aggfunc='count', fill_value=0)
-
-# Filter the pivot table to get counts more than 20
-filtered_pivot = pivot_table[pivot_table > 20].dropna()
-
-# Display the filtered pivot table
-print("Pivot table with counts more than 20:")
-print(filtered_pivot)
-
-# Extract the latitude and longitude indices from the filtered pivot table
-filtered_indices = filtered_pivot.index.tolist()
-
-# Filter the original DataFrame based on the filtered indices
-filtered_data = df[df.apply(lambda x: (x['Latitude'], x['Longitude']) in filtered_indices, axis=1)]
-
-# Display the filtered data with ID, interviewer ID, name, and count of interviews on a single date
-print("\nFiltered Data:")
-print(filtered_data[['ID', 'InterviewerID', 'Name', 'Date']])
-
-
-
-
-
-
-
-
-
-
-import pandas as pd
-
-# Sample DataFrame with ID, interviewer ID, name, and date columns
-data = {'ID': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        'InterviewerID': [101, 102, 101, 103, 102, 101, 103, 104, 105, 101],
-        'Name': ['Alice', 'Bob', 'Alice', 'Alice', 'Bob', 'Alice', 'Alice', 'Bob', 'Alice', 'Bob'],
-        'Date': ['2023-10-03', '2023-10-03', '2023-10-03', '2023-10-04', '2023-10-04', '2023-10-05', '2023-10-05', '2023-10-06', '2023-10-06', '2023-10-07']}
-
-df = pd.DataFrame(data)
-
-# Convert 'Date' column to datetime format
-df['Date'] = pd.to_datetime(df['Date'])
-
-# Group by 'Name' and 'Date' and count the number of interviews
-interview_counts = df.groupby(['Name', 'Date']).size().reset_index(name='InterviewCount')
-
-# Filter the data where interview count is more than 20
-filtered_data = interview_counts[interview_counts['InterviewCount'] > 20]
-
-# Display the result
-print("Interviews with more than 20 counts:")
-print(filtered_data)
-
-# If you want to get the list of IDs for those interviews
-filtered_ids = df[df['Name'].isin(filtered_data['Name']) & df['Date'].isin(filtered_data['Date'])]['ID'].tolist()
-print("\nList of IDs for interviews with more than 20 counts:")
-print(filtered_ids)
-
-
-
-
+df_time['Time_diff'] = df_time.groupby('Interviewer Name')['Survey Start time'].diff()
+# interview_ids_with_threshold=df_time[df_time['Time_diff']< pd.Timedelta(minutes=5)]['Unique ID'].tolist()
+# interview_ids_with_threshold = df_time[(df_time['Time_diff'] < pd.Timedelta(minutes=5)) & ~df_time['Time_diff'].isna()]['Unique ID'].tolist()
+interview_ids_with_threshold = df_time[(df_time['Time_diff'] < pd.Timedelta(minutes=5)) & ~df_time['Time_diff'].isna()]
+r=interview_ids_with_threshold[['Unique ID','Interviewer Name', 'Survey Date', 'Survey Start time','Time_diff']]
+# print("Interview IDs with time differences less than 5 minutes:", interview_ids_with_threshold)
+# r.to_csv('time.csv',index=False)
+r
+Unique ID	Interviewer Name	Survey Date	Survey Start time	Time_diff
+10208167	A Varalaxmi	26-08-2023	09-10-2023 14:54	
+10208190	A Varalaxmi	26-08-2023	09-10-2023 15:04	0 days 00:10:00
+10208242	A Varalaxmi	26-08-2023	09-10-2023 15:11	0 days 00:07:34
+10208276	A Varalaxmi	26-08-2023	09-10-2023 15:20	0 days 00:08:41
+10208297	A Varalaxmi	26-08-2023	09-10-2023 15:28	0 days 00:07:44
+10208331	A Varalaxmi	26-08-2023	09-10-2023 15:38	0 days 00:10:26
+10208378	A Varalaxmi	26-08-2023	09-10-2023 15:48	0 days 00:10:20
+10208416	A Varalaxmi	26-08-2023	09-10-2023 15:58	0 days 00:09:16
+10208441	A Varalaxmi	26-08-2023	09-10-2023 16:07	0 days 00:09:23
+10208460	A Varalaxmi	26-08-2023	09-10-2023 16:17	0 days 00:10:00
+10211569	A Varalaxmi	28-08-2023	09-10-2023 18:13	0 days 01:56:13
+10211584	A Varalaxmi	28-08-2023	09-10-2023 18:33	0 days 00:19:48
+10214704	A Varalaxmi	31-08-2023	09-10-2023 15:19	-1 days +20:45:24
+10214715	A Varalaxmi	31-08-2023	09-10-2023 15:32	0 days 00:13:19
+10214728	A Varalaxmi	31-08-2023	09-10-2023 15:39	0 days 00:06:58
+10214737	A Varalaxmi	31-08-2023	09-10-2023 15:45	0 days 00:06:33
+![image](https://github.com/learncoding3027/note/assets/146581060/11ab6608-6645-453e-80a8-bbc5f0c2ca10)
 
 
 
