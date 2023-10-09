@@ -1,3 +1,16 @@
+# Format the 'Survey Start time' and 'Time_diff' columns to display only the time portion
+filtered_data_five_min['Survey Start time'] = filtered_data_five_min['Survey Start time'].dt.strftime('%H:%M:%S')
+filtered_data_five_min['Time_diff'] = filtered_data_five_min['Time_diff'].dt.strftime('%H:%M:%S')
+
+print(filtered_data_five_min)
+This code will format the 'Survey Start time' and 'Time_diff' columns to display only the time portion and remove the date, giving you the desired output.
+
+
+
+
+
+
+
 df_time=df2.copy()
 
 df_time['Survey Start time']=df_time['Survey Start time'].astype(str)
