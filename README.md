@@ -2,6 +2,35 @@ df_time=df2.copy()
 
 df_time['Survey Start time']=df_time['Survey Start time'].astype(str)
 # Convert the Survey Date column to datetime objects
+df_time['Survey Start time'] = pd.to_datetime(df_time['Survey Start time'],format='%H:%M:%S')
+
+# Sort the DataFrame by 'Interviewer Name', 'Survey Date', and 'Survey Start time'
+df_time.sort_values(by=['Interviewer Name', 'Survey Date', 'Survey Start time'], inplace=True)
+
+# Calculate the time difference within each group (Interviewer Name and Survey Date)
+df_time['Time_diff'] = df_time.groupby(['Interviewer Name', 'Survey Date'])['Survey Start time'].diff()
+
+# Filter out the first entry for each group (where Time_diff is NaN)
+filtered_data_five_min = df_time[(df_time['Time_diff'] < pd.Timedelta(minutes=5)) & ~df_time['Time_diff'].isna()][['Unique ID','Interviewer Name', 'Survey Date', 'Survey Start time','Time_diff']]
+
+filtered_data_five_min
+-------------------------------------------------------------------------------------
+INPUT =
+	Unique ID	Interviewer Name	Survey Date	Survey Start time	
+5791	10210760	A.SANTHANAM		2023-08-28		12:39:44	
+5850	10213719	A.SANTHANAM		2023-08-30		11:34:54
+
+-----------------------------------------------------------------------------------
+OUTPUT =
+Unique ID	Interviewer Name	Survey Date	Survey Start time	Time_diff
+5791	10210760	A.SANTHANAM	2023-08-28	1900-01-01 12:39:44	0 days 00:03:33
+5850	10213719	A.SANTHANAM	2023-08-30	1900-01-01 11:34:54	0 days 00:04:46
+
+
+df_time=df2.copy()
+
+df_time['Survey Start time']=df_time['Survey Start time'].astype(str)
+# Convert the Survey Date column to datetime objects
 df_time['Survey Start time'] = pd.to_datetime(df_time['Survey Start time'])
 
 # Sort the DataFrame by 'Interviewer Name', 'Survey Date', and 'Survey Start time'
