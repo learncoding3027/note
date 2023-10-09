@@ -1,4 +1,45 @@
+import pandas as pd
+
+# Sample DataFrame with Unique ID, Interviewer Name, Survey Date, and Survey Start time columns
+data = {'Unique ID': [10208167, 10208190, 10208242, 10208276, 10208297, 10208331, 10208378, 10208416, 10208441, 10208460, 10211569, 10211584, 10214704, 10214715, 10214728, 10214737],
+        'Interviewer Name': ['A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi', 'A Varalaxmi'],
+        'Survey Date': ['26-08-2023', '26-08-2023', '26-08-2023', '26-08-2023', '26-08-2023', '26-08-2023', '26-08-2023', '26-08-2023', '26-08-2023', '26-08-2023', '28-08-2023', '28-08-2023', '31-08-2023', '31-08-2023', '31-08-2023', '31-08-2023'],
+        'Survey Start time': ['09-10-2023 14:54', '09-10-2023 15:04', '09-10-2023 15:11', '09-10-2023 15:20', '09-10-2023 15:28', '09-10-2023 15:38', '09-10-2023 15:48', '09-10-2023 15:58', '09-10-2023 16:07', '09-10-2023 16:17', '09-10-2023 18:13', '09-10-2023 18:33', '09-10-2023 15:19', '09-10-2023 15:32', '09-10-2023 15:39', '09-10-2023 15:45']}
+
+df = pd.DataFrame(data)
+
+# Convert 'Survey Date' and 'Survey Start time' columns to datetime objects
+df['Survey Date'] = pd.to_datetime(df['Survey Date'], format='%d-%m-%Y')
+df['Survey Start time'] = pd.to_datetime(df['Survey Start time'], format='%d-%m-%Y %H:%M')
+
+# Sort the DataFrame by 'Interviewer Name', 'Survey Date', and 'Survey Start time'
+df.sort_values(by=['Interviewer Name', 'Survey Date', 'Survey Start time'], inplace=True)
+
+# Calculate the time difference within each group (Interviewer Name and Survey Date)
+df['Time_diff'] = df.groupby(['Interviewer Name', 'Survey Date'])['Survey Start time'].diff()
+
+# Filter out the first entry for each group (where Time_diff is NaN)
+filtered_data = df[~df['Time_diff'].isna()]
+
+# Display the result with 'Unique ID', 'Interviewer Name', 'Survey Date', and 'Time_diff'
+result = filtered_data[['Unique ID', 'Interviewer Name', 'Survey Date', 'Time_diff']]
+print(result)
+
+
+
+
+
+
+
 df_time=df2.copy()
+
+
+
+
+
+
+
+
 # Sort the DataFrame by name, date, and time
 df_time.sort_values(by=['Interviewer Name', 'Survey Date', 'Survey Start time'], inplace=True)
 
