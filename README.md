@@ -1,3 +1,17 @@
+
+rural_pincodes = set()
+
+# Iterate through the recruitment files
+for recruitment_file in recruitment_files:
+    # Read the recruitment file into a DataFrame
+    recruitment_df = pd.read_csv(recruitment_file)
+    
+    # Filter recruitment data to get pincodes with "rural" in "rural/urban" column
+    rural_pincodes.update(recruitment_df[recruitment_df["RURALURBAN"] == "Rural"]["PINCODE"])
+    print(rural_pincodes)
+
+
+
 import pandas as pd
 
 # Read the survey file into a DataFrame
