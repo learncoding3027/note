@@ -15,14 +15,20 @@ for recruitment_file in recruitment_files:
     # Read the recruitment file into a DataFrame
     recruitment_df = pd.read_csv(recruitment_file)
     
-    # Merge the survey and recruitment DataFrames on "Pin-code"
-    merged_df = survey_df.merge(recruitment_df, on="Pin-code", how="inner")
-    
-    # Filter rows where "rural/urban" is "rural"
-    rural_rows = merged_df[merged_df["rural/urban"] == "rural"]
-    
-    # Add unique IDs from rural rows to the rural_ids list
-    rural_ids.extend(rural_rows["Unique ID"].unique())
+    # Iterate through the rows of the survey DataFrame
+    for index, survey_row in survey_df.iterrows():
+        survey_id = survey_row["Unique ID"]
+        survey_pincode = survey_row["Pin-code"]
+        
+        # Iterate through the rows of the recruitment DataFrame
+        for _, recruitment_row in recruitment_df.iterrows():
+            recruitment_pincode = recruitment_row["Pin-code"]
+            rural_urban = recruitment_row["rural/urban"]
+            
+            # Check if the survey pincode matches the recruitment pincode and "rural/urban" is "rural"
+            if survey_pincode == recruitment_pincode and rural_urban == "rural":
+                rural_ids.append(survey_id)
+                break  # Break out of the inner loop if a match is found for the current survey ID
 
 # Print or return the list of survey IDs where the combination of pincode and "rural/urban" is "rural"
 print("Survey IDs where the combination of pincode and 'rural/urban' is 'rural':", rural_ids)
