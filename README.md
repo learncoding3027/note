@@ -10,6 +10,49 @@ status = glob.glob(os.path.join(folder_path, 'HH_Status_*'))
 mem = glob.glob(os.path.join(folder_path, 'HHMember_Status_*'))
 tv = glob.glob(os.path.join(folder_path, 'HHTV_Details_Status_*'))
 
+# Sort files by creation time
+status_files = sorted(status, key=os.path.getctime)
+mem_files = sorted(mem, key=os.path.getctime)
+tv_files = sorted(tv, key=os.path.getctime)
+
+# Iterate through the files
+for status_file, mem_file, tv_file in zip(status_files, mem_files, tv_files):
+    # Get the date part from the status_file name
+    status_date = os.path.basename(status_file).split("_")[-1]
+    
+    # Read the CSV files into DataFrames
+    status_df = pd.read_csv(status_file, dtype=str, encoding='latin')
+    mem_df = pd.read_csv(mem_file, dtype=str, encoding='latin')
+    tv_df = pd.read_csv(tv_file, dtype=str, encoding='latin')
+    
+    # Drop duplicates of DQAID in copied DataFrames
+    status_df.drop_duplicates(subset=['DQAID'], inplace=True)
+    mem_df.drop_duplicates(subset=['DQAID'], inplace=True)
+    tv_df.drop_duplicates(subset=['DQAID'], inplace=True)
+    
+    if status_df['DQAID'].value_counts().equals(mem_df['DQAID'].value_counts()) and status_df['DQAID'].value_counts().equals(tv_df['DQAID'].value_counts()):
+        print(f'All counts match in {status_date} (Shape: {status_df.shape[0]})')
+    else:
+        print(f'Counts do not match in {status_date} (Shape: {status_df.shape[0]})')
+        
+
+
+
+
+
+
+import pandas as pd
+import os
+import glob
+
+# Folder path
+folder_path = r"\\10.10.2.199\Application_Share\DV_INPUT\RECRUITMENT"
+
+# List all files in the folder
+status = glob.glob(os.path.join(folder_path, 'HH_Status_*'))
+mem = glob.glob(os.path.join(folder_path, 'HHMember_Status_*'))
+tv = glob.glob(os.path.join(folder_path, 'HHTV_Details_Status_*'))
+
 status_files = status[-2:]
 mem_files = mem[-2:]
 tv_files = tv[-2:]
