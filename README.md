@@ -92,3 +92,6 @@ if not mismatched_files:
 else:
     print("Counts do not match in the following files:", mismatched_files)
 
+
+
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xdf in position 49694: invalid continuation byte
