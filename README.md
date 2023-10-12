@@ -30,11 +30,11 @@ for status_file, mem_file, tv_file in zip(status_files, mem_files, tv_files):
     mem_df.drop_duplicates(subset=['DQAID'], inplace=True)
     tv_df.drop_duplicates(subset=['DQAID'], inplace=True)
     
-    status_df_filtered = status_df[status_df['PI']!=12]
-    fil_status=status_df_filtered[['T9Q17B_1']].isna().sum()
+    
+    fil_status=status_df[['T5D13']].isna().sum()
     
 
 
     if  not fil_status.empty:
-        print(f'T9Q17B_1 (NaN) status file {status_date}\n',  fil_status )
+        print(f'T5D13 (NaN) status file {status_date}\n',  fil_status )
         print('-'*50)
