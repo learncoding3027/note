@@ -75,3 +75,31 @@ ValueError                                Traceback (most recent call last)
      51     nccs_checks = nccs_checks[['DQAID','T4M_8', 'T5D12','T4M_6','T4M_8_1' ,'T5D13']]
 
 ValueError: invalid literal for int() with base 10: 'None'
+
+
+
+
+
+
+
+# ...
+
+# Merge the DataFrames on 'DQAID'
+nccs_checks = status_df.merge(mem_dataframe, on='DQAID', how='inner')
+nccs_checks['T4M_8_1'] = nccs_checks['T4M_8'].fillna(99).astype(int)  # Fill missing values with 99
+
+# Select specific columns from status_df
+nccs_checks = nccs_checks[['DQAID','T4M_8', 'T5D12','T4M_6','T4M_8_1' ,'T5D13']]
+
+# Apply the mapping function to create the "mapped code" column
+nccs_checks['mapped code'] = nccs_checks.apply(map_to_code, axis=1)
+
+# Find IDs where the "code" column and "mapped code" column do not match
+nccs_check = list(nccs_checks[nccs_checks['T5D13'] != nccs_checks['mapped code']]['DQAID'])
+
+if len(nccs_check) > 0:
+    print(f" Count of Dqaid with mismatched 'NCCS' and 'mapped code for file date {status_date}':", len(nccs_check))
+    print("-"*100)
+else:
+    print("All Dqaid have matching 'NCCS' and 'mapped code'.")
+    
