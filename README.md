@@ -213,7 +213,19 @@ for status_file, mem_file, tv_file in zip(status_files, mem_files, tv_files):
         print("All IDs have matching 'code' and 'mapped code'.")
 
 
+# ...
 
+# Apply the mapping function to create the "mapped code" column
+nccs_checks['mapped code'] = nccs_checks.apply(map_to_code, axis=1)
+
+# Find IDs where the "code" column and "mapped code" column do not match
+nccs_check = list(nccs_checks[nccs_checks['T4M_8'] != nccs_checks['mapped code']]['DQAID'])
+
+if len(nccs_check) > 0:
+    print("IDs with mismatched 'T4M_8' and 'mapped code':", nccs_check)
+else:
+    print("All IDs have matching 'T4M_8' and 'mapped code'.")
+    
 
 NCCS checks for file date 20231010.csv
             DQAID T4M_8  T5D12 T4M_6 T5D13 mapped code
