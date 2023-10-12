@@ -38,3 +38,33 @@ for status_file, mem_file, tv_file in zip(status_files, mem_files, tv_files):
     if  not fil_status.empty:
         print(f'T5D13 (NaN) status file {status_date}\n',  fil_status )
         print('-'*50)
+
+
+
+
+
+# Iterate through the files
+for status_file, mem_file, tv_file in zip(status_files, mem_files, tv_files):
+    # Get the date part from the status_file name
+    status_date = os.path.basename(status_file).split("_")[-1]
+    
+    # Read the CSV files into DataFrames
+    status_df = pd.read_csv( status_file, dtype=str, encoding='latin',index_col=False)
+    mem_df = pd.read_csv(mem_file, dtype=str, encoding='latin',index_col=False)
+    tv_df = pd.read_csv(tv_file, dtype=str, encoding='latin',index_col=False)
+    
+    # Drop duplicates of DQAID in copied DataFrames
+    status_df.drop_duplicates(subset=['DQAID'], inplace=True)
+    mem_df.drop_duplicates(subset=['DQAID'], inplace=True)
+    tv_df.drop_duplicates(subset=['DQAID'], inplace=True)
+    
+    # Filter status_df for rows where T5D13 is null
+    status_df_null_T5D13 = status_df[status_df['T5D13'].isna()]
+    
+    # Get the DQAIDs from the filtered status_df
+    null_T5D13_dqaid = status_df_null_T5D13['DQAID']
+    
+    if not null_T5D13_dqaid.empty:
+        print(f'DQAID with T5D13 as NaN in status file {status_date}:\n', null_T5D13_dqaid)
+        print('-' * 50)
+        
