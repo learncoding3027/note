@@ -1,3 +1,36 @@
+# Function to apply the mapping
+    def map_to_code(row):
+        education = row['T4M_8']
+        count_durable = row['T5D12']
+
+        key = (education, count_durable)
+
+        if key in code_mapping:
+            return code_mapping[key]
+        else:
+            return None # Handle cases with no mapping
+
+    df_nccs=df2.copy()   
+    # Apply the mapping function to create the "code" column
+    df_nccs['mapped code'] = df_nccs.apply(map_to_code, axis=1)
+
+    # Find IDs where the "code" column and "mapped code" column do not match
+    nccs_check = list(df2[df2['nccs'] != df_nccs['mapped code']]['DQAID'])
+
+    if not len(nccs_check)>0:
+        print("IDs with mismatched 'code' and 'mapped code':", nccs_check)
+    else:
+        print("All IDs have matching 'code' and 'mapped code'.")
+
+
+
+
+
+
+
+
+
+
 import pandas as pd
 import os
 import glob
@@ -45,6 +78,12 @@ for status_file, mem_file, tv_file in zip(status_files, mem_files, tv_files):
     print(f'NCCS checks for file date {status_date}')
     print(nccs_checks)
     print('-' * 50)
+
+
+
+
+
+    
     
 
 
