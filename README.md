@@ -1,3 +1,18 @@
+def convert_to_int_or_99(value):
+    if value is None or value == 'None':
+        return 99
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return 99
+
+nccs_checks['T4M_8_1'] = nccs_checks['T4M_8'].apply(convert_to_int_or_99)
+
+
+
+
+
+
 this code ran for few files but after that i got value error
 
 import pandas as pd
