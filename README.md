@@ -1,4 +1,31 @@
 import pandas as pd
+
+# Example dataframes
+df1 = pd.DataFrame({'Name': ['John', 'Peter', 'John', 'Alice', 'Peter', 'John']})
+df2 = pd.DataFrame({'Name': ['John', 'Peter', 'Alice', 'Bob'], 'Count': [0, 0, 0, 0]})
+
+# Compute value counts
+value_counts = df1['Name'].value_counts()
+
+# Update the second dataframe
+for name, count in value_counts.items():
+    if name in df2['Name'].values:
+        df2.loc[df2['Name'] == name, 'Count'] = count
+    else:
+        df2 = df2.append({'Name': name, 'Count': count}, ignore_index=True)
+
+# Fill missing values with 0
+df2['Count'].fillna(0, inplace=True)
+
+print(df2)
+
+
+
+
+
+
+
+import pandas as pd
 import os
 import glob
 
