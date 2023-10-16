@@ -4,6 +4,29 @@ import pandas as pd
 
 # Your existing code here...
 
+# Merge 'urban_check' with 'recruitment_data_combined' on both 'TOWNVILLAGECODE' and 'PINCODE'
+merged_data = pd.merge(urban_check, recruitment_data_combined, on=['TOWNVILLAGECODE', 'PINCODE'], how='left')
+
+# Filter the merged data to get rows where 'RURALURBAN' is 'Rural'
+rural_data = merged_data[merged_data['RURALURBAN'] == 'Rural']
+
+# Extract the survey IDs for the rural data
+rural_ids = list(rural_data['Unique ID'])
+
+# Print the list of survey IDs where the combination of TOWNVILLAGECODE and 'RURALURBAN' is 'Rural'
+print("Survey IDs where the combination of TOWNVILLAGECODE and 'RURALURBAN' is 'Rural':", rural_ids)
+
+
+
+
+
+
+import os
+import glob
+import pandas as pd
+
+# Your existing code here...
+
 # Merge 'urban_check' with 'recruitment_data_combined' on 'Pin-code'
 urban_check = pd.merge(urban_check, recruitment_data_combined, on='PINCODE', how='left')
 
