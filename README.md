@@ -1,3 +1,37 @@
+import os
+import glob
+import pandas as pd
+
+# Your existing code here...
+
+# Merge 'urban_check' with 'recruitment_data_combined' on 'Pin-code'
+urban_check = pd.merge(urban_check, recruitment_data_combined, on='PINCODE', how='left')
+
+# Create a combined key of 'TOWNVILLAGECODE' and 'PINCODE' for urban_check
+urban_check['combined_key'] = urban_check['TOWNVILLAGECODE'] + '_' + urban_check['PINCODE']
+
+# Create a set of combined keys where 'RURALURBAN' is 'Rural' in recruitment data
+rural_keys = set(recruitment_data_combined[recruitment_data_combined['RURALURBAN'] == 'Rural'].apply(lambda row: row['TOWNVILLAGECODE'] + '_' + row['PINCODE'], axis=1))
+
+# Initialize a list to store survey IDs where the combined key corresponds to rural values
+rural_ids = []
+
+# Iterate through the rows of the urban_check DataFrame
+for index, survey_row in urban_check.iterrows():
+    survey_id = survey_row['Unique ID']
+    combined_key = survey_row['combined_key']
+
+    # Check if the combined key is in the set of rural keys
+    if combined_key in rural_keys:
+        rural_ids.append(survey_id)
+
+# Print the list of survey IDs where the combination of TOWNVILLAGECODE and 'RURALURBAN' is 'Rural'
+print("Survey IDs where the combination of TOWNVILLAGECODE and 'RURALURBAN' is 'Rural':", rural_ids)
+
+
+
+
+
 this code is not working so just can we just create key of pincode and townvillage code from urban check and from recuritment file do same create key of pincode and townvillage code where urban/rural =rural and then wwe will have only key of rural now search for same key present in urban ...if present just give me id where there is rural.
 
 
