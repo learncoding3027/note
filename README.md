@@ -1,1 +1,1 @@
-write me python code to make copy of same files and folders with same file and folder name and just make copy of only python files in each folder with same name from that location to other location by making copy of that with same name
+
