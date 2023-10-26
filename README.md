@@ -1,6 +1,70 @@
 import shutil
 import time
 from pathlib import Path
+import os
+
+def copy_files(source_path, destination_path, file_extensions_tuple, file_size_limit_mb, zip_dest_folder=True, delete_og_copied_files=False):
+    """
+    This function copies all the specified type (extension) of files within the specified size limit (in MB) from the source path to the destination path.
+    It maintains the folder tree.
+    """
+    timestr = time.strftime("%Y%m%d")
+    print('Date of script run:', timestr)
+    print()
+    file_size_limit_mb = file_size_limit_mb  # files greater than this size will not be copied
+    source_folder = Path(source_path)
+    destination_folder = Path(destination_path + '_' + timestr)
+    extensions = file_extensions_tuple
+    for file_path in source_folder.rglob('*'):
+        if file_path.suffix in extensions:
+            try:
+                file_size_mb = file_path.stat().st_size / (1024 * 1024)
+                if file_size_mb <= file_size_limit_mb:
+                    relative_path = file_path.relative_to(source_folder)
+                    # Handle long file names
+                    destination_file_path = destination_folder / relative_path
+                    destination_file_path = Path(os.path.abspath(str(destination_file_path)[:250]))  # Adjust to an appropriate length
+                    destination_file_path.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy(file_path, destination_file_path)
+                    print(f"Copied {file_path} to {destination_file_path}")
+            except Exception as e:
+                print(f"Error occurred for file {file_path}: {e}")
+
+    if zip_dest_folder:
+        shutil.make_archive(destination_folder, 'zip', destination_folder)
+        print("Zipping the copied files as:", destination_folder.with_suffix('.zip'))
+
+        if delete_og_copied_files:
+            shutil.rmtree(destination_folder)
+            print("Deleted the copied folder - without zipped:", destination_folder)
+
+    return print('\n', '\n', 'Successfully copied the files')
+
+
+################################################ Calling the function ################################################
+source_path = r"C:\Users\monish.lalani\OneDrive - Broadcast Audience Research Council\Desktop\NEW\Methodology"
+destination_path = r"C:\Users\monish.lalani\OneDrive - Broadcast Audience Research Council\Documents\Methodology_copy"
+
+copy_files(source_path, destination_path, file_extensions_tuple=('.ipynb', '.csv', '.xlsx', '.py', '.parquet'),
+           file_size_limit_mb=10, zip_dest_folder=True, delete_og_copied_files=True)
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import shutil
+import time
+from pathlib import Path
 
 def copy_files(source_path, destination_path, file_extensions_tuple, file_size_limit_mb, zip_dest_folder=True, delete_og_copied_files=False):
     """
