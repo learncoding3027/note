@@ -1,27 +1,19 @@
-import pandas as pd
-import matplotlib.pyplot as plt
+# %%time
+df_all =      pd.concat(dfs_out)
 
-# Creating a sample dataframe
-data = {
-    'ID': [1, 1, 1, 2, 2, 2, 3, 3, 3],
-    'Delta1': [2, 4, 6, 1, 3, 5, 2, 3, 4],
-    'Delta2': [3, 5, 7, 2, 4, 6, 3, 4, 5],
-    'Delta3': [4, 6, 8, 3, 5, 7, 4, 5, 6]
-}
+cols_to_drop = ['key_OG', 'residual_list']
+df_all = df_all.reset_index(drop=True)
+df_all = df_all[[i for i in df_all.columns if i not in cols_to_drop]]
 
-df = pd.DataFrame(data)
+dekho(df_all,1)
+pq.write_table(pa.Table.from_pandas(df_all), fr"{sec_col_type}_df_all_pre_rec_MP.parquet", compression='BROTLI') #'GZIP'a 
 
-# Group the data by 'ID'
-grouped = df.groupby('ID')
 
-# Plotting line charts for each delta
-for key, group in grouped:
-    plt.plot(group['ID'], group['Delta1'], label='Delta1')
-    plt.plot(group['ID'], group['Delta2'], label='Delta2')
-    plt.plot(group['ID'], group['Delta3'], label='Delta3')
-    plt.xlabel('ID')
-    plt.ylabel('Values')
-    plt.title(f'Line Chart for ID {key}')
-    plt.legend()
-    plt.show()
-    
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+C:\Users\SHAURY~1.VER\AppData\Local\Temp\3/ipykernel_12416/4097862995.py in <module>
+      7 
+      8 dekho(df_all,1)
+----> 9 pq.write_table(pa.Table.from_pandas(df_all), fr"{sec_col_type}_df_all_pre_rec_MP.parquet", compression='BROTLI') #'GZIP'a
+
+AttributeError: 'str' object has no attribute 'write_table'
