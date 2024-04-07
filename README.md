@@ -1,11 +1,89 @@
-SG_name	TC_code1	NCCS_code1	Sex_code1	Age_Group_code1	TV/ Non TV	Individuals	TC_code1_og	TC_match_del	tc_2	nccs_3	ag_sex	key_og	key	sub_panel_key	strata_count	tc_2_OG	nccs_3_OG	ag_sex_OG	Individuals_OG	strata_count_OG	key_rim	strata_count_rim	Individuals_rim	rim_pp	key_mer	strata_count_mer	Individuals_mer
-0	PUN/CHA	123	4	1	7	TV	4395.0	2	[123]	123	34	1_7	(PUN/CHA, 2, 4, 1_7)	(PUN/CHA, 123, 34, 1_7)	(PUN/CHA, 123)	11	123	34	1_7	4395.0	11	(PUN/CHA, 123, 34, 1_7)	66	68141.0	1032.439394	(PUN/CHA, 123, 34, 1_7)	66	68141.0
-1	PUN/CHA	123	4	2	7	TV	10200.0	3	[123]	123	34	2_7	(PUN/CHA, 3, 4, 2_7)	(PUN/CHA, 123, 34, 2_7)	(PUN/CHA, 123)	12	123	34	2_7	10200.0	12	(PUN/CHA, 123, 34, 2_7)	72	68619.0	953.041667	(PUN/CHA, 123, 34, 2_7)	72	68619.0
-2	NE/SIKKIM	123	2	2	7	TV	62533.0	1	[123]	123	2	2_7	(NE/SIKKIM, 1, 2, 2_7)	(NE/SIKKIM, 123, 2, 2_7)	(NE/SIKKIM, 123)	7	123	2	2_7	62533.0	7	(NE/SIKKIM, 123, 2, 2_7)	14	110493.0	7892.357143	(NE/SIKKIM, 123, 2, 2_7)	14	110493.0
-3	NE/SIKKIM	123	1	2	7	TV	26470.0	1	[123]	123	1	2_7	(NE/SIKKIM, 1, 1, 2_7)	(NE/SIKKIM, 123, 1, 2_7)	(NE/SIKKIM, 123)	8	123	1	2_7	26470.0	8	(NE/SIKKIM, 123, 1, 2_7)	16	78487.0	4905.437500	(NE/SIKKIM, 123, 1, 2_7)	16	78487.0
-4	KERALA	12	1	2	1	TV	38951.0	1	[3, 12]	123	1	2_1	(KERALA, 1, 1, 2_1)	(KERALA, 123, 1, 2_1)	(KERALA, 123)	30	123	1	2_1	38951.0	30	(KERALA, 123, 1, 2_1)	90	622354.0	6915.044444	(KERALA, 123, 1, 2_1)	90	622354.0
-5	AP/TELANGANA	123	1	2	7	TV	42446.0	1	[4, 123]	123	1	2_7	(AP/TELANGANA, 1, 1, 2_7)	(AP/TELANGANA, 123, 1, 2_7)	(AP/TELANGANA, 123)	11	123	1	2_7	42446.0	11	(AP/TELANGANA, 123, 1, 2_7)	33	181779.0	5508.454545	(AP/TELANGANA, 123, 1, 2_7)	33	181779.0
-6	AP/TELANGANA	123	1	1	2	TV	54356.0	1	[4, 123]	123	1	1_2	(AP/TELANGANA, 1, 1, 1_2)	(AP/TELANGANA, 123, 1, 1_2)	(AP/TELANGANA, 123)	10	123	1	1_2	54356.0	10	(AP/TELANGANA, 123, 1, 1_2)	30	181031.0	6034.366667	(AP/TELANGANA, 123, 1, 1_2)	30	181031.0
-7	GUJ/D&D/DNH	12	1	2	7	TV	81924.0	1	[3, 12]	123	1	2_7	(GUJ/D&D/DNH, 1, 1, 2_7)	(GUJ/D&D/DNH, 123, 1, 2_7)	(GUJ/D&D/DNH, 123)	21	123	1	2_7	81924.0	21	(GUJ/D&D/DNH, 123, 1, 2_7)	63	447621.0	7105.095238	(GUJ/D&D/DNH, 123, 1, 2_7)	63	447621.0
-8	KERALA	12	2	2	1	TV	26334.0	1	[3, 12]	123	2	2_1	(KERALA, 1, 2, 2_1)	(KERALA, 123, 2, 2_1)	(KERALA, 123)	42	123	2	2_1	26334.0	42	(KERALA, 123, 2, 2_1)	126	891998.0	7079.349206	(KERALA, 123, 2, 2_1)	126	891998.0
-9	WEST BENGAL	123	1	1	7	TV	25936.0	3	[4, 123]	123	1	1_7	(WEST BENGAL, 3, 1, 1_7)	(WEST BENGAL, 123, 1, 1_7)	(WEST BENGAL, 123)	12	123	1	1_7	25936.0	12	(WEST BENGAL, 123, 1, 1_7)	36	201862.0	5607.277778	(WEST BENGAL, 123, 1, 1_7)	36	201862.0
+verbose       = False
+set_sec_col= {'None': set()}
+mx_merg_req=['ag_sex', 'nccs_3', 'tc_2']
+config_file_path = r"\\10.10.2.199\Department_Share\MSCI_Team\MSci_Pure_Science\Methodology_Work\OOH_2022-11-23\Work\Vijay\OOH UE Iteration\Production\UE Jun_RIM\Merging algo RIM_OOH.xlsx"
+mx_merg = {}
+for i in mx_merg_req:     
+    try:
+        mx_merg[i] = pd.read_excel( config_file_path, sheet_name=i+'_ooh', skiprows=[0], index_col=0)
+    except:
+        print("Error in df_merg - most probably Merging Algo excel file is unavailable, or Code_Strata worksheet is missing in the excel file")
+        break
+            
+print(mx_merg.keys())
+
+levels = {}
+max_merge = 4
+for x in range(1,max_merge+1):
+    levels[x]  = { j : { i :  (mx_merg[j][ mx_merg[j][i]>0 ][i] .sort_values().index[x-1]) if len(mx_merg[j][ mx_merg[j][i]>(x-1) ])>0 else np.nan  for i in mx_merg[j].columns} for j in mx_merg.keys() }
+levels.keys()
+levels
+
+
+output
+
+dict_keys(['ag_sex', 'nccs_3', 'tc_2'])
+{1: {'ag_sex': {'1_1': '2_1',
+   '1_2': '2_2',
+   '1_3': '1_4',
+   '1_4': '1_3',
+   '1_5': '1_4',
+   '1_6': '1_7',
+   '1_7': '1_6',
+   '2_1': '1_1',
+   '2_2': '1_2',
+   '2_3': '2_4',
+   '2_4': '2_3',
+   '2_5': '2_4',
+   '2_6': '2_7',
+   '2_7': '2_6'},
+  'nccs_3': {1: 2, 2: 1, '34': 2},
+  'tc_2': {'123': 4, '4': 123}},
+ 2: {'ag_sex': {'1_1': '1_2',
+   '1_2': '1_1',
+   '1_3': '1_5',
+   '1_4': '1_5',
+   '1_5': '1_6',
+   '1_6': '1_5',
+   '1_7': '1_5',
+   '2_1': '1_2',
+   '2_2': '1_1',
+   '2_3': '2_5',
+   '2_4': '2_5',
+   '2_5': '2_6',
+   '2_6': '2_5',
+   '2_7': '2_5'},
+  'nccs_3': {1: 34, 2: 34, '34': 1},
+  'tc_2': {'123': nan, '4': nan}},
+ 3: {'ag_sex': {'1_1': '2_2',
+   '1_2': '2_1',
+   '1_3': '1_6',
+   '1_4': '1_6',
+   '1_5': '1_3',
+   '1_6': '1_4',
+   '1_7': '1_4',
+   '2_1': '2_2',
+   '2_2': '2_1',
+   '2_3': '2_6',
+   '2_4': '2_6',
+   '2_5': '2_3',
+   '2_6': '2_4',
+   '2_7': '2_4'},
+  'nccs_3': {1: nan, 2: nan, '34': nan},
+  'tc_2': {'123': nan, '4': nan}},
+ 4: {'ag_sex': {'1_1': '1_3',
+   '1_2': '1_3',
+   '1_3': '1_7',
+   '1_4': '1_7',
+   '1_5': '1_7',
+   '1_6': '1_3',
+   '1_7': '1_3',
+   '2_1': '1_3',
+   '2_2': '1_3',
+   '2_3': '2_7',
+   '2_4': '2_7',
+   '2_5': '2_7',
+   '2_6': '2_3',
+   '2_7': '2_3'},
+  'nccs_3': {1: nan, 2: nan, '34': nan},
+  'tc_2': {'123': nan, '4': nan}}}
