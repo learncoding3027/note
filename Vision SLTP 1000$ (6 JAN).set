@@ -1,0 +1,80 @@
+WinLargeFonts=false
+UseSystem1=true
+UseSystem2=true
+EA_Comment=Vision SL TP Gold
+MaxSpread=40.0
+Slippage=20
+BR===== Basic Rules ====
+AutoGMT_Offset=true
+ManualGMT_Offset=2
+DST_Usage=true
+NFA=false
+No_Hedge=false
+StealthMode=false
+PendingOrderDist=0
+StopLimitExpire=15
+ER===== Extra Rules ====
+MondayStartHour=0
+FridayExit=false
+LastTradeHour=19
+ExitHour=20
+MM1===== System 1 Risk Management ====
+RecoveryMode1=false
+FixedLots1=0.1
+AutoMM1=0.0
+AutoMM_Max1=10.0
+MM2===== System 2 Risk Management ====
+RecoveryMode2=false
+FixedLots2=0.1
+AutoMM2=0.0
+AutoMM_Max2=10.0
+Add_Lot_Multiplier=1.0
+SYS1===== System 1 Settings ====
+Sys1_LongOnly=false
+Magic1=30001
+StopLoss1=200
+TakeProfit1=200
+SYS2===== System 2 Settings ====
+Magic2=30002
+StopLoss2=1700
+TakeProfit2=0
+Sys2MaxOrders=2
+TurboMode2=true
+NF===== News Filter Settings ====
+Avoid_News=false
+Include_Medium_News=true
+Wait_Before_News=30
+Wait_After_News=30
+TM===== Time Management System ====
+AllowedHour_ForBacktest=-1
+MondayTrading=true
+MondayTradingHours=all
+TuesdayTrading=true
+TuesdayTradingHours=all
+WednesdayTrading=true
+WednesdayTradingHours=all
+ThursdayTrading=true
+ThursdayTradingHours=all
+FridayTrading=true
+FridayTradingHours=all
+SaturdayTrading=true
+SundayTrading=true
+BS===== Broker Spy Settings ====
+BSM_Alerts=true
+BSM_Alert_Open_Delay=500
+BSM_Alert_Open_Slippage=20.0
+BSM_Alert_StopLimit_Delay=500
+BSM_Alert_StopLimit_Slippage=20.0
+BSM_Alert_Close_Delay=500
+BSM_Alert_Close_Slippage=20.0
+ProtectionPanel=true
+m_maxlot=0.0
+cd0=--- Daily Protections ---
+m_maxdloss=0.0
+m_maxd_DD_p=0.0
+m_resethr=0
+cd1=--- Account Protections ---
+m_minEquity=0.0
+m_maxEquity_DD_p=0.0
+m_maxEquity=0.0
+m_lossPause=0
