@@ -7,4 +7,3 @@ weltrade	sibin	1000
 49440059	Nanda	1000	114	1114
 49440347	Manoj	500		
 	baldev	1000		
-![image](https://github.com/user-attachments/assets/4dce4df4-aa58-4c96-9a8c-d69eb7cfd9cf)
