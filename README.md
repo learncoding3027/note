@@ -123,6 +123,7 @@ Know More About Mcube
 📌 Who We Are
 Mcube is a next-generation investment platform that combines AI-powered trading with multiple earning opportunities. We believe in smart, automated wealth-building that allows investors to grow their money effortlessly.
 Mcube is a smart investment platform that combines AI-powered trading with multiple ways to earn.
+
 Whether you're looking for passive income or active growth, we provide a secure and transparent system to help you achieve financial success.
 Our advanced trading bot works 24/7 to maximize profits, while our structured earning model ensures sustainable and rewarding growth.
 With flexible investment plans and a user-friendly system, Mcube makes wealth-building simple and accessible for everyone.
